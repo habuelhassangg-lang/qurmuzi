@@ -32,6 +32,9 @@ pnpm dev                     # http://localhost:3000 → redirects to /ar
 | `pnpm db:migrate`                   | Apply migrations (PGlite locally, Neon if `DATABASE_URL` is set) |
 | `pnpm db:seed`                      | Seed dummy data                                                  |
 
+`/styleguide` (design system page) works in `pnpm dev`. In a production build it returns 404
+unless `ENABLE_STYLEGUIDE=1` is set at build time; `pnpm test:e2e` sets it for its own build.
+
 Run `pnpm exec playwright install chromium` once before the first E2E run,
 or set `PLAYWRIGHT_CHROMIUM_EXECUTABLE` to an existing Chromium binary.
 

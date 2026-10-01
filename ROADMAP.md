@@ -37,7 +37,7 @@
 - [x] سكربتات `db:generate` و`db:migrate` و`db:seed` (الـ seed فاضي دلوقتي)
 - [x] Vitest + Playwright بـ 4 projects: (ديسكتوب / موبايل 360px) × (ar / en)
 - [x] 🆕 GitHub Actions CI: lint + typecheck + test على كل push
-- [ ] 🆕 نشر مبكر على Vercel + Neon بصفحة placeholder بسيطة بس
+- [x] 🆕 نشر مبكر على Vercel + Neon بصفحة placeholder بسيطة بس
 
 **Done when:** الـ CI أخضر، و`/ar` و`/en` بيفتحوا على لينك Vercel بالاتجاه الصح.
 
@@ -54,15 +54,15 @@
 
 ## M1 — نظام التصميم (نسخة الـ MVP)
 
-- [ ] Design tokens (ألوان، مسافات، radius، خطوط) في CSS variables + `@theme` في Tailwind
-- [ ] تخصيص كومبوننتس shadcn اللي الـ MVP محتاجها بس: Button, Input, Textarea, Select, RadioGroup, Checkbox, Sheet (drawer), Dialog, Badge, Card, Skeleton, Toast
-- [ ] صفحة `/styleguide` (بتشتغل في الـ development بس) وبتعرض كل الكومبوننتس
-- [ ] Header (لوجو، روابط، أيقونة السلة بالعدد، مبدّل اللغة) + Footer
-- [ ] لوجو مؤقت: كلمة "قُرمُزي" بخط Alexandria (الضمة على شكل بتلة 🟡 بعدين)
-- [ ] 🆕 شريط "موقع تجريبي، لا توجد طلبات أو مدفوعات حقيقية" (وده شريط الإعلان الوحيد المسموح)
-- [ ] إعداد GSAP + ScrollTrigger + `@gsap/react` + Motion
-- [ ] كومبوننتس حركة الـ MVP: `Reveal`, `TextReveal`, `ColorFlood`، وكل واحد له نسخة هادية عند `prefers-reduced-motion`
-- [ ] 🆕 دوال `lib/utils` + unit tests: تنسيق السعر من الهللة، فصل الضريبة 15%، التاريخ ميلادي + هجري بتوقيت الرياض، تنسيق رقم الجوال `+966` والتحقق منه
+- [x] Design tokens (ألوان، مسافات، radius، خطوط) في CSS variables + `@theme` في Tailwind
+- [x] تخصيص كومبوننتس shadcn اللي الـ MVP محتاجها بس: Button, Input, Textarea, Select, RadioGroup, Checkbox, Sheet (drawer), Dialog, Badge, Card, Skeleton, Toast
+- [x] صفحة `/styleguide` (بتشتغل في الـ development بس) وبتعرض كل الكومبوننتس
+- [x] Header (لوجو، روابط، أيقونة السلة بالعدد، مبدّل اللغة) + Footer
+- [x] لوجو مؤقت: كلمة "قُرمُزي" بخط Alexandria (الضمة على شكل بتلة 🟡 بعدين)
+- [x] 🆕 شريط "موقع تجريبي، لا توجد طلبات أو مدفوعات حقيقية" (وده شريط الإعلان الوحيد المسموح)
+- [x] إعداد GSAP + ScrollTrigger + `@gsap/react` + Motion
+- [x] كومبوننتس حركة الـ MVP: `Reveal`, `TextReveal`, `ColorFlood`، وكل واحد له نسخة هادية عند `prefers-reduced-motion`
+- [x] 🆕 دوال `lib/utils` + unit tests: تنسيق السعر من الهللة، فصل الضريبة 15%، التاريخ ميلادي + هجري بتوقيت الرياض، تنسيق رقم الجوال `+966` والتحقق منه
 
 **Done when:** كل حاجة ظاهرة في `/styleguide`، وفي screenshots من Playwright للـ 4 حالات، والـ utils عليها tests.
 

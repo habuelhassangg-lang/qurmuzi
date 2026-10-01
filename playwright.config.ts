@@ -51,6 +51,8 @@ export default defineConfig({
         command: `pnpm build && pnpm start --port ${PORT}`,
         url: baseURL,
         reuseExistingServer: !process.env.CI,
+        // E2E screenshots /styleguide, which is 404 in production builds without this flag.
+        env: { ENABLE_STYLEGUIDE: "1" },
         timeout: 180_000,
       },
 });
