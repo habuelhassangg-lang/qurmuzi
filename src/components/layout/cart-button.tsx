@@ -1,35 +1,42 @@
+"use client";
+
 import { ShoppingBag } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { cartCount, useCart } from "@/lib/cart/store";
 import { formatNumber } from "@/lib/utils/numbers";
 
 /**
- * Cart icon with item count. The count is static (0) until the cart store
- * lands in M4. The icon is the anchor for the L1 "flower flies into the bag" moment.
+ * Header bag icon with the item count; opens the cart drawer. It is also the
+ * anchor for the L1 "flower flies into the bag" moment (`data-cart-target`).
  */
-export function CartButton({ count = 0 }: { count?: number }) {
+export function CartButton() {
   const t = useTranslations("Header");
   const locale = useLocale();
+  const hydrated = useCart((s) => s.hydrated);
+  const lines = useCart((s) => s.lines);
+  const setOpen = useCart((s) => s.setOpen);
+  // Before the cart is read from storage, show 0 so server and client render the same.
+  const count = hydrated ? cartCount(lines) : 0;
   const formatted = formatNumber(count, locale);
 
   return (
-    <Link
-      href="/cart"
-      // The cart page arrives in M4; avoid prefetching a 404 until then.
-      prefetch={false}
+    <button
+      type="button"
       data-cart-target
+      onClick={() => setOpen(true)}
       aria-label={t("cart", { count, formatted })}
-      className="relative inline-flex size-11 items-center justify-center rounded-full hover:bg-accent"
+      className="relative inline-flex size-11 cursor-pointer items-center justify-center rounded-full hover:bg-accent"
     >
       <ShoppingBag className="size-6" aria-hidden />
       {count > 0 && (
         <span
           aria-hidden
+          data-testid="cart-count"
           className="absolute -end-0.5 -top-0.5 grid min-w-5 place-items-center rounded-full bg-crimson-600 px-1 text-xs leading-5 font-medium text-cream"
         >
           {formatted}
         </span>
       )}
-    </Link>
+    </button>
   );
 }

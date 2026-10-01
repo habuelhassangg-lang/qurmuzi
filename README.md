@@ -20,19 +20,20 @@ pnpm dev                     # http://localhost:3000 → redirects to /ar
 
 ## Scripts
 
-| Command                             | What it does                                                                        |
-| ----------------------------------- | ----------------------------------------------------------------------------------- |
-| `pnpm dev`                          | Dev server                                                                          |
-| `pnpm build` / `pnpm start`         | Production build / serve it                                                         |
-| `pnpm lint`                         | ESLint                                                                              |
-| `pnpm format` / `pnpm format:check` | Prettier write / check                                                              |
-| `pnpm typecheck`                    | Generate route types + `tsc --noEmit`                                               |
-| `pnpm test`                         | Vitest unit tests                                                                   |
-| `pnpm test:e2e`                     | Playwright: desktop + 360px mobile × ar + en                                        |
-| `pnpm db:generate`                  | Generate a migration from `src/lib/db/schema.ts`                                    |
-| `pnpm db:migrate`                   | Apply migrations (PGlite locally, Neon if `DATABASE_URL` is set)                    |
-| `pnpm db:seed`                      | Seed dummy data (idempotent)                                                        |
-| `pnpm images`                       | Build product images (real photos from `scripts/images/source/`, else placeholders) |
+| Command                             | What it does                                                                         |
+| ----------------------------------- | ------------------------------------------------------------------------------------ |
+| `pnpm dev`                          | Dev server                                                                           |
+| `pnpm build` / `pnpm start`         | Production build / serve it                                                          |
+| `pnpm lint`                         | ESLint                                                                               |
+| `pnpm format` / `pnpm format:check` | Prettier write / check                                                               |
+| `pnpm typecheck`                    | Generate route types + `tsc --noEmit`                                                |
+| `pnpm test`                         | Vitest unit tests                                                                    |
+| `pnpm test:e2e`                     | Playwright: desktop + 360px mobile × ar + en (fresh `.pglite-e2e` database each run) |
+| `pnpm e2e:db`                       | Recreate the E2E database with edge-case fixtures                                    |
+| `pnpm db:generate`                  | Generate a migration from `src/lib/db/schema.ts`                                     |
+| `pnpm db:migrate`                   | Apply migrations (PGlite locally, Neon if `DATABASE_URL` is set)                     |
+| `pnpm db:seed`                      | Seed dummy data (idempotent)                                                         |
+| `pnpm images`                       | Build product images (real photos from `scripts/images/source/`, else placeholders)  |
 
 `/styleguide` (design system page) works in `pnpm dev`. In a production build it returns 404
 unless `ENABLE_STYLEGUIDE=1` is set at build time; `pnpm test:e2e` sets it for its own build.
@@ -48,6 +49,7 @@ or set `PLAYWRIGHT_CHROMIUM_EXECUTABLE` to an existing Chromium binary.
 - Not set → PGlite, stored in `.pglite/` (git-ignored). PGlite never runs on Vercel.
 
 PGlite allows one process at a time, so stop `pnpm dev` before running `db:migrate` or `db:seed`.
+E2E tests use a separate `.pglite-e2e` folder, so they never touch your dev data.
 
 ## Product images
 

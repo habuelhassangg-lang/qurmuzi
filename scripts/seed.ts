@@ -195,7 +195,48 @@ async function main() {
   );
 }
 
+async function applyE2eFixtures() {
+  const { and, asc, eq } = await import("drizzle-orm");
+  const { db } = await import("../src/lib/db/client");
+  const s = await import("../src/lib/db/schema");
+  const { E2E_CAPACITY, e2eFixtureDates } = await import("./data/e2e-fixtures");
+  const { isoWeekday, riyadhDateString } =
+    await import("../src/lib/utils/dates");
+
+  const { fullSlotDate, blackoutDate } = e2eFixtureDates(riyadhDateString());
+  // Plenty of capacity so repeated test orders never fill a slot by accident.
+  await db.update(s.dailyCapacity).set({ capacity: E2E_CAPACITY });
+  await db
+    .insert(s.blackoutDates)
+    .values({ date: blackoutDate, reasonAr: "اختبار", reasonEn: "Test" })
+    .onConflictDoNothing();
+  const slots = await db
+    .select()
+    .from(s.deliverySlots)
+    .orderBy(asc(s.deliverySlots.sortOrder));
+  const firstSlot = slots.find((slot) =>
+    slot.weekdays.includes(isoWeekday(fullSlotDate)),
+  );
+  if (firstSlot) {
+    await db
+      .update(s.dailyCapacity)
+      .set({ reserved: E2E_CAPACITY })
+      .where(
+        and(
+          eq(s.dailyCapacity.date, fullSlotDate),
+          eq(s.dailyCapacity.slotId, firstSlot.id),
+        ),
+      );
+  }
+  console.log(
+    `Seed: E2E fixtures (full slot on ${fullSlotDate}, blackout on ${blackoutDate}).`,
+  );
+}
+
 main()
+  .then(() =>
+    process.env.SEED_E2E_FIXTURES === "1" ? applyE2eFixtures() : undefined,
+  )
   .then(() => process.exit(0))
   .catch((error: unknown) => {
     console.error(error);

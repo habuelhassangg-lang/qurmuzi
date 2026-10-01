@@ -3,6 +3,8 @@
 import { useId, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { useCart } from "@/lib/cart/store";
+import { track } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -10,19 +12,26 @@ import type { ProductDetail } from "@/lib/db/queries/catalog";
 import { calculateItemPrice } from "@/lib/pricing";
 import { formatPrice } from "@/lib/utils/currency";
 
-type Props = Pick<ProductDetail, "variants" | "addOns">;
+type Props = Pick<ProductDetail, "id" | "slug" | "variants" | "addOns">;
 
 /**
  * Size + add-on picker with a live price. Prices shown here are for display
  * only: the cart stores IDs, and the server re-prices the order (M4).
  */
-export function ProductPurchase({ variants, addOns }: Props) {
+export function ProductPurchase({
+  id: productId,
+  slug,
+  variants,
+  addOns,
+}: Props) {
   const t = useTranslations("Product");
   const tSizes = useTranslations("Sizes");
   const locale = useLocale();
   const id = useId();
   const [variantId, setVariantId] = useState(variants[0]?.id);
   const [addOnIds, setAddOnIds] = useState<number[]>([]);
+  const addToCart = useCart((state) => state.add);
+  const openCart = useCart((state) => state.setOpen);
 
   const variant = variants.find((v) => v.id === variantId) ?? variants[0];
   if (!variant) return null;
@@ -110,7 +119,23 @@ export function ProductPurchase({ variants, addOns }: Props) {
         <Button
           size="lg"
           className="flex-1"
-          onClick={() => toast(t("cartComingSoon"))}
+          onClick={() => {
+            addToCart({
+              productId,
+              variantId: variant.id,
+              addOnIds,
+              quantity: 1,
+            });
+            track("add_to_cart", {
+              item_id: slug,
+              value: total / 100,
+              currency: "SAR",
+              quantity: 1,
+            });
+            toast.success(t("addedToCart"), {
+              action: { label: t("viewCart"), onClick: () => openCart(true) },
+            });
+          }}
         >
           {t("addToCart")}
         </Button>

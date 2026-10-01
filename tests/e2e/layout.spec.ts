@@ -25,7 +25,7 @@ test.describe("header", () => {
 
     const header = page.getByRole("banner");
     await expect(
-      header.getByRole("link", { name: copy[locale].cart }),
+      header.getByRole("button", { name: copy[locale].cart }),
     ).toBeVisible();
     await expect(
       header.getByRole("link", { name: copy[locale].switchTo }),
