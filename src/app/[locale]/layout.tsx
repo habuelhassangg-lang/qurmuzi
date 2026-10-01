@@ -2,12 +2,19 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { DemoNotice } from "@/components/layout/demo-notice";
+import { Footer } from "@/components/layout/footer";
+import { Header } from "@/components/layout/header";
+import { Providers } from "@/components/layout/providers";
 import { localeDirection, routing } from "@/i18n/routing";
 import { fontVariables } from "@/lib/fonts";
+import { alternatesFor, SITE_URL } from "@/lib/site";
 import "../globals.css";
 
+// Pages render on first visit and are then cached (on-demand ISR), so
+// `next build` never needs the database. See the decisions log in CLAUDE.md.
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
+  return [];
 }
 
 export async function generateMetadata({
@@ -16,7 +23,12 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
   const t = await getTranslations({ locale, namespace: "Metadata" });
-  return { title: t("title"), description: t("description") };
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: { default: t("title"), template: `%s | ${t("siteName")}` },
+    description: t("description"),
+    alternates: alternatesFor(locale),
+  };
 }
 
 export default async function LocaleLayout({
@@ -26,15 +38,23 @@ export default async function LocaleLayout({
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
+  const dir = localeDirection[locale];
 
   return (
     <html
       lang={locale}
-      dir={localeDirection[locale]}
+      dir={dir}
       className={`${fontVariables} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          <Providers dir={dir}>
+            <DemoNotice />
+            <Header />
+            <main className="flex flex-1 flex-col">{children}</main>
+            <Footer />
+          </Providers>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

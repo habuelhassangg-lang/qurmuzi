@@ -8,7 +8,7 @@ import * as schema from "./schema";
 
 export type Db = PgDatabase<PgQueryResultHKT, typeof schema>;
 
-export const PGLITE_DATA_DIR = ".pglite";
+import { PGLITE_DATA_DIR } from "./config";
 
 function createDb(): Db {
   const url = process.env.DATABASE_URL;

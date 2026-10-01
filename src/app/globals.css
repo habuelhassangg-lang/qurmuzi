@@ -1,28 +1,110 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* Placeholder tokens for M0. The full design system lands in M1. */
+/*
+ * Design tokens — CLAUDE.md section 5.
+ * Brand tokens are the source of truth; shadcn's semantic tokens map onto them.
+ * Never hard-code a color in a component: use a utility like `bg-crimson-600`
+ * or a semantic one like `bg-primary`.
+ */
 :root {
+  /* Brand palette */
+  --crimson-700: #7a1426;
   --crimson-600: #9e1b32;
+  --crimson-500: #b8283f;
+  --crimson-50: #fbeef0;
   --cream: #fbf8f4;
   --ink: #1f2a24;
+  --sage: #8fa68e;
+  --muted: #6b7280;
+
+  /* Supporting neutrals (not in the brand table; UI chrome only) */
+  --surface: #ffffff;
+  --line: #e7dfd6;
+  --surface-muted: #f3eee8;
+  --danger: #b3261e;
+
+  /* Radius: 12px cards, pill buttons */
+  --radius: 0.75rem;
+
+  /* Fonts: Alexandria for Arabic display, Unbounded for English display */
   --display-family: var(--font-alexandria);
+
+  /* shadcn semantic tokens */
+  --background: var(--cream);
+  --foreground: var(--ink);
+  --card: var(--surface);
+  --card-foreground: var(--ink);
+  --popover: var(--surface);
+  --popover-foreground: var(--ink);
+  --primary: var(--crimson-600);
+  --primary-foreground: var(--cream);
+  --secondary: var(--crimson-50);
+  --secondary-foreground: var(--crimson-700);
+  --accent: var(--crimson-50);
+  --accent-foreground: var(--crimson-700);
+  --destructive: var(--danger);
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--crimson-600);
 }
 
-/* English headings use Unbounded; Arabic keeps Alexandria. */
 :lang(en) {
   --display-family: var(--font-unbounded);
 }
 
 @theme inline {
+  --color-crimson-700: var(--crimson-700);
   --color-crimson-600: var(--crimson-600);
+  --color-crimson-500: var(--crimson-500);
+  --color-crimson-50: var(--crimson-50);
   --color-cream: var(--cream);
   --color-ink: var(--ink);
+  --color-sage: var(--sage);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  /* shadcn uses `bg-muted` for quiet surfaces and `text-muted-foreground` for
+     secondary text; the brand `--muted` is the text color. */
+  --color-muted: var(--surface-muted);
+  --color-muted-foreground: var(--muted);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: var(--radius);
+
   --font-sans: var(--font-plex-arabic), system-ui, sans-serif;
   --font-display: var(--display-family), var(--font-plex-arabic), sans-serif;
+  --font-logo: var(--font-alexandria), sans-serif;
 }
 
-body {
-  background: var(--cream);
-  color: var(--ink);
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-ring;
+  }
 }

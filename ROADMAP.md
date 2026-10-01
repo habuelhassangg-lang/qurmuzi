@@ -37,7 +37,7 @@
 - [x] سكربتات `db:generate` و`db:migrate` و`db:seed` (الـ seed فاضي دلوقتي)
 - [x] Vitest + Playwright بـ 4 projects: (ديسكتوب / موبايل 360px) × (ar / en)
 - [x] 🆕 GitHub Actions CI: lint + typecheck + test على كل push
-- [ ] 🆕 نشر مبكر على Vercel + Neon بصفحة placeholder بسيطة بس
+- [x] 🆕 نشر مبكر على Vercel + Neon بصفحة placeholder بسيطة بس
 
 **Done when:** الـ CI أخضر، و`/ar` و`/en` بيفتحوا على لينك Vercel بالاتجاه الصح.
 
@@ -54,15 +54,15 @@
 
 ## M1 — نظام التصميم (نسخة الـ MVP)
 
-- [ ] Design tokens (ألوان، مسافات، radius، خطوط) في CSS variables + `@theme` في Tailwind
-- [ ] تخصيص كومبوننتس shadcn اللي الـ MVP محتاجها بس: Button, Input, Textarea, Select, RadioGroup, Checkbox, Sheet (drawer), Dialog, Badge, Card, Skeleton, Toast
-- [ ] صفحة `/styleguide` (بتشتغل في الـ development بس) وبتعرض كل الكومبوننتس
-- [ ] Header (لوجو، روابط، أيقونة السلة بالعدد، مبدّل اللغة) + Footer
-- [ ] لوجو مؤقت: كلمة "قُرمُزي" بخط Alexandria (الضمة على شكل بتلة 🟡 بعدين)
-- [ ] 🆕 شريط "موقع تجريبي، لا توجد طلبات أو مدفوعات حقيقية" (وده شريط الإعلان الوحيد المسموح)
-- [ ] إعداد GSAP + ScrollTrigger + `@gsap/react` + Motion
-- [ ] كومبوننتس حركة الـ MVP: `Reveal`, `TextReveal`, `ColorFlood`، وكل واحد له نسخة هادية عند `prefers-reduced-motion`
-- [ ] 🆕 دوال `lib/utils` + unit tests: تنسيق السعر من الهللة، فصل الضريبة 15%، التاريخ ميلادي + هجري بتوقيت الرياض، تنسيق رقم الجوال `+966` والتحقق منه
+- [x] Design tokens (ألوان، مسافات، radius، خطوط) في CSS variables + `@theme` في Tailwind
+- [x] تخصيص كومبوننتس shadcn اللي الـ MVP محتاجها بس: Button, Input, Textarea, Select, RadioGroup, Checkbox, Sheet (drawer), Dialog, Badge, Card, Skeleton, Toast
+- [x] صفحة `/styleguide` (بتشتغل في الـ development بس) وبتعرض كل الكومبوننتس
+- [x] Header (لوجو، روابط، أيقونة السلة بالعدد، مبدّل اللغة) + Footer
+- [x] لوجو مؤقت: كلمة "قُرمُزي" بخط Alexandria (الضمة على شكل بتلة 🟡 بعدين)
+- [x] 🆕 شريط "موقع تجريبي، لا توجد طلبات أو مدفوعات حقيقية" (وده شريط الإعلان الوحيد المسموح)
+- [x] إعداد GSAP + ScrollTrigger + `@gsap/react` + Motion
+- [x] كومبوننتس حركة الـ MVP: `Reveal`, `TextReveal`, `ColorFlood`، وكل واحد له نسخة هادية عند `prefers-reduced-motion`
+- [x] 🆕 دوال `lib/utils` + unit tests: تنسيق السعر من الهللة، فصل الضريبة 15%، التاريخ ميلادي + هجري بتوقيت الرياض، تنسيق رقم الجوال `+966` والتحقق منه
 
 **Done when:** كل حاجة ظاهرة في `/styleguide`، وفي screenshots من Playwright للـ 4 حالات، والـ utils عليها tests.
 
@@ -78,21 +78,21 @@
 
 ## M2 — البيانات والكتالوج وصفحة المنتج
 
-- [ ] Database schema: categories, occasions, products (اسم ووصف بالعربي والإنجليزي، slug، لون، نوع الورد)، product_images, variants (عادي / كبير / فاخر)، add_ons, cities, districts (برسوم توصيل)، delivery_slots, daily_capacity, blackout_dates, settings, orders, order_items, order_status_history
-- [ ] 🪝 خطاطيف في الـ schema:
+- [x] Database schema: categories, occasions, products (اسم ووصف بالعربي والإنجليزي، slug، لون، نوع الورد)، product_images, variants (عادي / كبير / فاخر)، add_ons, cities, districts (برسوم توصيل)، delivery_slots, daily_capacity, blackout_dates, settings, orders, order_items, order_status_history
+- [x] 🪝 خطاطيف في الـ schema:
   - `orders.user_id` يقبل null (عشان الحسابات بعدين)
   - `coupon_code` و`discount_halalas` (عشان الكوبونات بعدين)
   - `utm_first` و`utm_last` (jsonb، يقبلوا null)
   - الـ enum فيه كل حالات الطلب من دلوقتي
   - occasions فيها تواريخ (عشان صفحات المواسم)
   - الإعدادات (زي ساعة الـ cut-off) في جدول، مش constants في الكود (عشان الأدمن بعدين)
-- [ ] 🆕 سكربت صور: صور Pexels ← قص 4:5 ← WebP/AVIF في `/public`، مع حفظ اسم المصوّر
-- [ ] Seed: **15 منتج** واقعي (نكمّلهم 30 🟡 بعدين) بأسماء وأوصاف باللغة البيضا وأسعار بالريال، و3 مدن بأحياء حقيقية، وفترات توصيل، وسعة يومية لـ 30 يوم قدام
-- [ ] صفحة الكتالوج: فلترة بالمناسبة والميزانية، وترتيب (السعر، الأحدث)، والفلاتر في الـ URL، مع حالات skeleton وempty
-- [ ] صفحة المنتج: معرض صور، أحجام، إضافات، سعر بيتحدث مباشرة، زرار أضف للسلة ثابت على الموبايل، وعد التوصيل، وملاحظة سياسة البدائل
-- [ ] 🪝 صورة المنتج عليها `view-transition-name` ثابت (عشان الـ shared-element transition بعدين)
-- [ ] SEO أساسي: `generateMetadata`، canonical، hreflang، JSON-LD (Product وOffer وBreadcrumbList)، `sitemap.ts`، `robots.ts`
-- [ ] 🪝 `track()` كـ stub (من غير أي vendor) بأسماء events عليها types، ويتنادى عند `view_item`
+- [x] 🆕 سكربت صور: صور Pexels ← قص 4:5 ← WebP/AVIF في `/public`، مع حفظ اسم المصوّر
+- [x] Seed: **15 منتج** واقعي (نكمّلهم 30 🟡 بعدين) بأسماء وأوصاف باللغة البيضا وأسعار بالريال، و3 مدن بأحياء حقيقية، وفترات توصيل، وسعة يومية لـ 30 يوم قدام
+- [x] صفحة الكتالوج: فلترة بالمناسبة والميزانية، وترتيب (السعر، الأحدث)، والفلاتر في الـ URL، مع حالات skeleton وempty
+- [x] صفحة المنتج: معرض صور، أحجام، إضافات، سعر بيتحدث مباشرة، زرار أضف للسلة ثابت على الموبايل، وعد التوصيل، وملاحظة سياسة البدائل
+- [x] 🪝 صورة المنتج عليها `view-transition-name` ثابت (عشان الـ shared-element transition بعدين)
+- [x] SEO أساسي: `generateMetadata`، canonical، hreflang، JSON-LD (Product وOffer وBreadcrumbList)، `sitemap.ts`، `robots.ts`
+- [x] 🪝 `track()` كـ stub (من غير أي vendor) بأسماء events عليها types، ويتنادى عند `view_item`
 
 **Done when:** تقدري تتفرجي على كل المنتجات وتفلتريها وتفتحي أي منتج، بالعربي والإنجليزي، والـ JSON-LD بيعدّي من Rich Results Test.
 
@@ -108,13 +108,13 @@ CLAUDE.md. الأسعار تتخزن بالهللة. ضيف كل الخطاطي�
 
 ## M3 — الصفحة الرئيسية v1
 
-- [ ] Hero: عنوان + وعد التوصيل ("اطلب قبل 2 ظهرًا ويوصل اليوم") من أول شاشة + CTA، وصورة ثابتة هي الـ LCP، و`ColorFlood` من الكريمي للقرمزي مع الـ scroll
-- [ ] 🪝 الـ Hero فيه slot اسمه `HeroMedia`، عشان وردة التفتّح تيجي مكان الصورة بعدين من غير ما نغيّر الصفحة
-- [ ] "وش المناسبة؟" بـ `TextReveal` + شبكة كروت المناسبات (كل كرت بيودّي للكتالوج متفلتر)
-- [ ] 🆕 اختصارات الميزانية (أقل من 200 ر.س، من 200 لـ 400 ...)، لأن الشراء بالمناسبة والميزانية أولًا
-- [ ] منتجات مميزة
-- [ ] JSON-LD (Organization)
-- [ ] Lighthouse موبايل على الرئيسية بميزانية الأداء
+- [x] Hero: عنوان + وعد التوصيل ("اطلب قبل 2 ظهرًا ويوصل اليوم") من أول شاشة + CTA، وصورة ثابتة هي الـ LCP، و`ColorFlood` من الكريمي للقرمزي مع الـ scroll
+- [x] 🪝 الـ Hero فيه slot اسمه `HeroMedia`، عشان وردة التفتّح تيجي مكان الصورة بعدين من غير ما نغيّر الصفحة
+- [x] "وش المناسبة؟" بـ `TextReveal` + شبكة كروت المناسبات (كل كرت بيودّي للكتالوج متفلتر)
+- [x] 🆕 اختصارات الميزانية (أقل من 200 ر.س، من 200 لـ 400 ...)، لأن الشراء بالمناسبة والميزانية أولًا
+- [x] منتجات مميزة
+- [x] JSON-LD (Organization)
+- [x] Lighthouse موبايل على الرئيسية بميزانية الأداء
 
 **Done when:** الرئيسية بتوصّل للكتالوج والمنتج في ضغطتين، والـ Lighthouse موبايل ≥ الميزانية.
 
@@ -269,6 +269,7 @@ CLAUDE.md. الأسعار تتخزن بالهللة. ضيف كل الخطاطي�
 - طلبات الشركات
 - بطاقات هدايا (Gift cards)
 - Dark mode (الـ tokens كـ CSS variables هتسهّله)
+- صور حقيقية للمنتجات من Pexels بدل الصور المؤقتة (السكربت جاهز: حط الصور في `scripts/images/source/` وشغّل `pnpm images --force`)
 - رمز الريال السعودي الرسمي الجديد بدل "ر.س" (التغيير هيبقى في دالة التنسيق بس)
 
 ---
