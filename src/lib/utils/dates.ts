@@ -84,3 +84,8 @@ export function formatHour(hour: number, locale: Locale): string {
     hour < 12 ? "صباحًا" : hour < 15 ? "ظهرًا" : hour < 18 ? "عصرًا" : "مساءً";
   return `${h12} ${period}`;
 }
+
+/** A `YYYY-MM-DD` Riyadh calendar date as a Date at Riyadh noon (safe to format in any calendar). */
+export function riyadhNoon(dateString: string): Date {
+  return new Date(`${dateString}T12:00:00+03:00`);
+}

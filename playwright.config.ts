@@ -48,11 +48,19 @@ export default defineConfig({
   webServer: process.env.PLAYWRIGHT_BASE_URL
     ? undefined
     : {
-        command: `pnpm build && pnpm start --port ${PORT}`,
+        // Fresh E2E database, then a production build.
+        command: `pnpm e2e:db && pnpm build && pnpm start --port ${PORT}`,
         url: baseURL,
         reuseExistingServer: !process.env.CI,
-        // E2E screenshots /styleguide, which is 404 in production builds without this flag.
-        env: { ENABLE_STYLEGUIDE: "1" },
-        timeout: 180_000,
+        timeout: 240_000,
+        // Stop the server politely so PGlite can close its files.
+        gracefulShutdown: { signal: "SIGTERM", timeout: 5_000 },
+        env: {
+          PGLITE_DATA_DIR: ".pglite-e2e",
+          // E2E screenshots /styleguide, which is 404 in production builds without this flag.
+          ENABLE_STYLEGUIDE: "1",
+          // Lets tests pin "now" with a cookie to check the same-day cut-off.
+          ENABLE_TEST_CLOCK: "1",
+        },
       },
 });

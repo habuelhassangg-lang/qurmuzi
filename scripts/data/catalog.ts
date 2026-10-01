@@ -431,6 +431,14 @@ export const SETTINGS = {
   same_day_cutoff_hour: 14,
   capacity_days_ahead: 30,
   gift_message_max_length: 200,
+  /** Hours between ordering and the start of a same-day slot. */
+  same_day_prep_hours: 2,
+  /** How many days ahead customers can pick a delivery date. */
+  delivery_days_ahead: 14,
+  /** Dummy VAT registration number shown on invoices (demo only). */
+  vat_number: "300000000000003",
+  seller_name_ar: "قُرمُزي (متجر تجريبي)",
+  seller_name_en: "Qurmuzi (demo store)",
   /** Product slugs shown in "featured" on the home page, in order. */
   featured_products: [
     "crimson-classic",

@@ -157,6 +157,8 @@ export default async function ProductPage({
           </p>
 
           <ProductPurchase
+            id={product.id}
+            slug={product.slug}
             variants={product.variants}
             addOns={product.addOns}
           />
