@@ -431,6 +431,13 @@ export const SETTINGS = {
   same_day_cutoff_hour: 14,
   capacity_days_ahead: 30,
   gift_message_max_length: 200,
+  /** Product slugs shown in "featured" on the home page, in order. */
+  featured_products: [
+    "crimson-classic",
+    "tulip-garden",
+    "baby-pink-basket",
+    "graduation-sun",
+  ],
 };
 
 /** Images per product (placeholders until real photos are added). */

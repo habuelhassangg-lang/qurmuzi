@@ -1,11 +1,10 @@
 "use client";
 
-import { MotionConfig } from "motion/react";
 import { Direction } from "radix-ui";
 import type { ReactNode } from "react";
 import { Toaster } from "@/components/ui/sonner";
 
-/** Client-side providers: RTL direction for Radix, reduced-motion support for Motion, toasts. */
+/** Client-side providers: RTL direction for Radix, and toasts. */
 export function Providers({
   dir,
   children,
@@ -15,10 +14,8 @@ export function Providers({
 }) {
   return (
     <Direction.Provider dir={dir}>
-      <MotionConfig reducedMotion="user">
-        {children}
-        <Toaster />
-      </MotionConfig>
+      {children}
+      <Toaster />
     </Direction.Provider>
   );
 }

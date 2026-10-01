@@ -5,7 +5,8 @@
     "catalogTitle": "All flowers",
     "catalogDescription": "Browse bouquets and arrangements by occasion and budget, delivered in Riyadh, Jeddah and Dammam.",
     "productDescriptionSuffix": "Flower delivery in Riyadh, Jeddah and Dammam.",
-    "siteName": "Qurmuzi"
+    "siteName": "Qurmuzi",
+    "organizationDescription": "A demo flower shop delivering in Riyadh, Jeddah and Dammam."
   },
   "Common": {
     "brand": "Qurmuzi",
@@ -31,8 +32,19 @@
     "rights": "© {year} Qurmuzi"
   },
   "Home": {
-    "tagline": "Flowers for the people you love, coming soon.",
-    "browse": "Browse flowers"
+    "heroEyebrow": "Welcome to Qurmuzi",
+    "heroTitle": "Fresh flowers for the people you love",
+    "heroBody": "Bouquets and arrangements for every occasion, delivered in Riyadh, Jeddah and Dammam.",
+    "heroCta": "Order now",
+    "heroImageAlt": "A crimson flower bouquet",
+    "occasionsTitle": "What's the occasion?",
+    "occasionsBody": "Pick your occasion and we'll suggest the right flowers.",
+    "budgetTitle": "Shop by budget",
+    "featuredTitle": "Our picks for you",
+    "viewAll": "Browse all flowers",
+    "floodTitle": "Every bouquet is made by hand",
+    "floodBody": "We arrange your flowers on the day of delivery, and if a flower is unavailable we replace it with a similar one in color and value.",
+    "floodCta": "Choose your bouquet"
   },
   "Styleguide": {
     "title": "Style guide",
@@ -95,7 +107,8 @@
     "revealSample": "This content fades in gently when you reach it.",
     "textRevealSample": "What's the occasion?",
     "floodTitle": "Welcome to Qurmuzi",
-    "floodBody": "This section floods from cream to crimson as you scroll."
+    "floodBody": "This section floods from cream to crimson as you scroll.",
+    "shop": "Shop components"
   },
   "Delivery": {
     "promise": "Order before {hour} for same-day delivery",

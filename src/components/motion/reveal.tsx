@@ -2,7 +2,7 @@
 
 import { useRef, type ComponentProps } from "react";
 import { cn } from "@/lib/utils/cn";
-import { gsap, MOTION_QUERIES, useGSAP } from "./gsap";
+import { MOTION_QUERIES, useLazyGsap } from "./gsap";
 import { DURATION, EASE, REVEAL_OFFSET } from "./tokens";
 
 type RevealProps = ComponentProps<"div"> & {
@@ -13,6 +13,8 @@ type RevealProps = ComponentProps<"div"> & {
 /**
  * Fades and lifts its children into view once, when they scroll into the viewport.
  * Reduced motion: content is shown as-is, no movement.
+ * Only opacity is animated (not visibility), so links inside stay focusable:
+ * tabbing to one scrolls it into view, which triggers the reveal.
  */
 export function Reveal({
   children,
@@ -22,22 +24,18 @@ export function Reveal({
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
 
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
-      mm.add(MOTION_QUERIES.motion, () => {
-        gsap.from(ref.current, {
-          autoAlpha: 0,
-          y: REVEAL_OFFSET,
-          duration: DURATION.slow,
-          delay,
-          ease: EASE.out,
-          scrollTrigger: { trigger: ref.current, start: "top 85%", once: true },
-        });
+  useLazyGsap(ref, (gsap) => {
+    gsap.matchMedia().add(MOTION_QUERIES.motion, () => {
+      gsap.from(ref.current, {
+        opacity: 0,
+        y: REVEAL_OFFSET,
+        duration: DURATION.slow,
+        delay,
+        ease: EASE.out,
+        scrollTrigger: { trigger: ref.current, start: "top 85%", once: true },
       });
-    },
-    { scope: ref },
-  );
+    });
+  });
 
   return (
     <div ref={ref} data-motion="reveal" className={cn(className)} {...props}>

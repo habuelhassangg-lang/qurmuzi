@@ -2,7 +2,7 @@
 
 import { useRef, type ElementType } from "react";
 import { cn } from "@/lib/utils/cn";
-import { gsap, MOTION_QUERIES, useGSAP } from "./gsap";
+import { MOTION_QUERIES, useLazyGsap } from "./gsap";
 import { DURATION, EASE } from "./tokens";
 
 type TextRevealProps = {
@@ -27,12 +27,12 @@ export function TextReveal({
   const ref = useRef<HTMLElement>(null);
   const words = text.split(/\s+/).filter(Boolean);
 
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
-      mm.add(MOTION_QUERIES.motion, () => {
+  useLazyGsap(
+    ref,
+    (gsap) => {
+      gsap.matchMedia().add(MOTION_QUERIES.motion, () => {
         gsap.from("[data-word]", {
-          autoAlpha: 0,
+          opacity: 0,
           y: "0.4em",
           duration: DURATION.slow,
           ease: EASE.out,
@@ -41,7 +41,7 @@ export function TextReveal({
         });
       });
     },
-    { scope: ref, dependencies: [text] },
+    [text],
   );
 
   return (

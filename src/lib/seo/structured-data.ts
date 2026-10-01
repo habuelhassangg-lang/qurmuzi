@@ -47,3 +47,22 @@ export function breadcrumbJsonLd(items: Array<{ name: string; path: string }>) {
     })),
   };
 }
+
+export function organizationJsonLd(
+  locale: Locale,
+  name: string,
+  description: string,
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name,
+    description,
+    url: absoluteUrl(localePath(locale, "")),
+    areaServed: [
+      { "@type": "City", name: "Riyadh" },
+      { "@type": "City", name: "Jeddah" },
+      { "@type": "City", name: "Dammam" },
+    ],
+  };
+}

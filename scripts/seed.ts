@@ -147,20 +147,24 @@ async function main() {
           sortOrder: i,
         })),
       );
-
-      await tx
-        .insert(s.settings)
-        .values(
-          Object.entries(data.SETTINGS).map(([key, value]) => ({ key, value })),
-        )
-        .onConflictDoNothing();
     });
     console.log(
-      `Seed: inserted catalog (${data.PRODUCTS.length} products), zones, slots and settings.`,
+      `Seed: inserted catalog (${data.PRODUCTS.length} products), zones and slots.`,
     );
   } else {
     console.log("Seed: catalog already present, skipping.");
   }
+
+  // Settings: add missing keys on every run, never overwrite existing values
+  // (they may have been changed on purpose).
+  const newSettings = await db
+    .insert(s.settings)
+    .values(
+      Object.entries(data.SETTINGS).map(([key, value]) => ({ key, value })),
+    )
+    .onConflictDoNothing()
+    .returning({ key: s.settings.key });
+  console.log(`Seed: ${newSettings.length} new settings.`);
 
   // Capacity for the next N days. Slots are matched to the seed config by start time.
   const slots = await db.select().from(s.deliverySlots);

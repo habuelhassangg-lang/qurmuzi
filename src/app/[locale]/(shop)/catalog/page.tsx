@@ -12,6 +12,9 @@ import { formatNumber } from "@/lib/utils/numbers";
 import { catalogQuery, parseCatalogFilters } from "@/lib/validation/catalog";
 import { FilterChips, type Chip } from "./filter-chips";
 
+// Filters come from the query string, so every request renders fresh.
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({
   params,
 }: PageProps<"/[locale]/catalog">): Promise<Metadata> {

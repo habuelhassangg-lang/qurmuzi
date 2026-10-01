@@ -21,6 +21,7 @@ import { IMAGES_PER_PRODUCT, PRODUCTS } from "./data/catalog";
 
 const SOURCE_DIR = "scripts/images/source";
 const OUT_DIR = "public/images/products";
+const HERO_OUT_DIR = "public/images/home";
 const IMAGE_WIDTHS = [IMAGE_SMALL_WIDTH, IMAGE_LARGE_WIDTH] as const;
 const RATIO = 5 / 4; // height / width
 const FORMATS = ["webp", "avif"] as const;
@@ -110,7 +111,32 @@ async function main() {
       console.log(`${source ? "photo      " : "placeholder"}  ${name}`);
     }
   }
-  console.log(`Done: ${written} files written to ${OUT_DIR}.`);
+  // Home hero (LCP image). Same 4:5 crop; a real photo can replace it the same way.
+  const heroSource = findSource("hero-1");
+  for (const width of IMAGE_WIDTHS) {
+    for (const format of FORMATS) {
+      const out = path.join(HERO_OUT_DIR, `hero-1-${width}.${format}`);
+      if (!force && existsSync(out)) continue;
+      mkdirSync(HERO_OUT_DIR, { recursive: true });
+      const image = sharp(heroSource ?? placeholderSvg("red", 2)).resize(
+        width,
+        Math.round(width * RATIO),
+        {
+          fit: "cover",
+          position: sharp.strategy.attention,
+        },
+      );
+      await (
+        format === "webp"
+          ? image.webp({ quality: 78 })
+          : image.avif({ quality: 55 })
+      ).toFile(out);
+      written++;
+    }
+  }
+  console.log(`${heroSource ? "photo      " : "placeholder"}  hero-1`);
+
+  console.log(`Done: ${written} files written.`);
 }
 
 main().catch((error: unknown) => {

@@ -111,17 +111,43 @@ export async function listProducts(
 }
 
 export type OccasionOption = { slug: string; name: string };
+export type OccasionSummary = OccasionOption & { description: string | null };
 
-export async function listOccasions(locale: Locale): Promise<OccasionOption[]> {
+export async function listOccasions(
+  locale: Locale,
+): Promise<OccasionSummary[]> {
   const rows = await db
     .select({
       slug: occasions.slug,
       nameAr: occasions.nameAr,
       nameEn: occasions.nameEn,
+      descriptionAr: occasions.descriptionAr,
+      descriptionEn: occasions.descriptionEn,
     })
     .from(occasions)
     .orderBy(asc(occasions.sortOrder));
-  return rows.map((row) => ({ slug: row.slug, name: localized(row, locale) }));
+  return rows.map((row) => ({
+    slug: row.slug,
+    name: localized(row, locale),
+    description: locale === "ar" ? row.descriptionAr : row.descriptionEn,
+  }));
+}
+
+/**
+ * Featured products, in the order set by the `featured_products` setting.
+ * The catalog is small (15 products in the MVP), so this reuses `listProducts`.
+ */
+export async function listFeaturedProducts(
+  locale: Locale,
+): Promise<ProductCardData[]> {
+  const slugs = await getSetting<string[]>("featured_products", []);
+  if (slugs.length === 0) return [];
+  const all = await listProducts(
+    { sort: "newest", occasion: undefined, budget: undefined },
+    locale,
+  );
+  const bySlug = new Map(all.map((product) => [product.slug, product]));
+  return slugs.flatMap((slug) => bySlug.get(slug) ?? []);
 }
 
 export async function listProductSlugs(): Promise<string[]> {

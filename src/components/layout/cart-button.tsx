@@ -15,6 +15,8 @@ export function CartButton({ count = 0 }: { count?: number }) {
   return (
     <Link
       href="/cart"
+      // The cart page arrives in M4; avoid prefetching a 404 until then.
+      prefetch={false}
       data-cart-target
       aria-label={t("cart", { count, formatted })}
       className="relative inline-flex size-11 items-center justify-center rounded-full hover:bg-accent"

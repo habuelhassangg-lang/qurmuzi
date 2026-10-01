@@ -1,21 +1,21 @@
 import { expect, test } from "@playwright/test";
 
 const expected = {
-  ar: { dir: "rtl", brand: "قُرمُزي" },
-  en: { dir: "ltr", brand: "Qurmuzi" },
+  ar: { dir: "rtl", title: "ورد طازج يوصل لمن تحب" },
+  en: { dir: "ltr", title: "Fresh flowers for the people you love" },
 } as const;
 
 test.describe("locale shell", () => {
   test("renders with the right lang and dir", async ({ page }, testInfo) => {
     const locale = testInfo.project.metadata.locale as keyof typeof expected;
-    const { dir, brand } = expected[locale];
+    const { dir, title } = expected[locale];
 
     await page.goto(`/${locale}`);
 
     const html = page.locator("html");
     await expect(html).toHaveAttribute("lang", locale);
     await expect(html).toHaveAttribute("dir", dir);
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText(brand);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(title);
     await expect(page.getByRole("note")).toBeVisible();
   });
 

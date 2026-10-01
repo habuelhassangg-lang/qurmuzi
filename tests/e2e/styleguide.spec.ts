@@ -36,6 +36,7 @@ test.describe("styleguide", () => {
       "overlays",
       "badges",
       "skeleton",
+      "shop",
       "utils",
       "motion",
     ]) {
@@ -89,11 +90,21 @@ test.describe("styleguide", () => {
   }, testInfo) => {
     const locale = projectLocale(testInfo);
     await page.goto(`/${locale}/styleguide`);
-    // Before scrolling, the flood content is hidden: the animation is really wired up.
-    await expect(page.locator("[data-flood-content]")).toHaveCSS(
-      "opacity",
-      "0",
-    );
+    const content = page.locator("[data-flood-content]");
+    // Far from the viewport, GSAP is not loaded yet and the content is plainly visible.
+    await expect(content).toHaveCSS("opacity", "1");
+    // Just below the fold, GSAP loads and sets the start state: the animation is wired up.
+    await content.evaluate((el) => {
+      const section = el.closest("section")!;
+      window.scrollTo(
+        0,
+        section.getBoundingClientRect().top +
+          window.scrollY -
+          window.innerHeight -
+          50,
+      );
+    });
+    await expect(content).toHaveCSS("opacity", "0");
     const flood = page.getByText(copy[locale].flood);
     await flood.scrollIntoViewIfNeeded();
     await page.mouse.wheel(0, 600);

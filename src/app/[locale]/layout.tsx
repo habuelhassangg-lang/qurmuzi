@@ -11,8 +11,10 @@ import { fontVariables } from "@/lib/fonts";
 import { alternatesFor, SITE_URL } from "@/lib/site";
 import "../globals.css";
 
+// Pages render on first visit and are then cached (on-demand ISR), so
+// `next build` never needs the database. See the decisions log in CLAUDE.md.
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
+  return [];
 }
 
 export async function generateMetadata({

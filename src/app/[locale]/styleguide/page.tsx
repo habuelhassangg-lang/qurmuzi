@@ -11,6 +11,7 @@ import { ColorsSection } from "./_sections/colors";
 import { FormsSection } from "./_sections/forms";
 import { MotionSection } from "./_sections/motion";
 import { OverlaysSection } from "./_sections/overlays";
+import { ShopSection } from "./_sections/shop";
 import { TypographySection } from "./_sections/typography";
 import { UtilsSection } from "./_sections/utils";
 
@@ -36,6 +37,7 @@ export default function StyleguidePage({
       <FormsSection />
       <OverlaysSection />
       <BadgesCardsSection />
+      <ShopSection />
       <UtilsSection />
       <MotionSection />
     </div>

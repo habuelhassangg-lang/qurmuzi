@@ -2,7 +2,7 @@
 
 import { useRef, type ComponentProps } from "react";
 import { cn } from "@/lib/utils/cn";
-import { gsap, MOTION_QUERIES, useGSAP } from "./gsap";
+import { MOTION_QUERIES, useLazyGsap } from "./gsap";
 
 /**
  * A section that floods from cream to crimson as it scrolls into view.
@@ -18,33 +18,29 @@ export function ColorFlood({
 }: ComponentProps<"section">) {
   const ref = useRef<HTMLElement>(null);
 
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
-      mm.add(MOTION_QUERIES.motion, () => {
-        const timeline = gsap.timeline({
-          scrollTrigger: {
-            trigger: ref.current,
-            start: "top bottom",
-            end: "top 30%",
-            scrub: true,
-          },
-        });
-        timeline
-          .fromTo(
-            "[data-flood-layer]",
-            { scaleY: 0 },
-            { scaleY: 1, ease: "none", duration: 0.7 },
-          )
-          .fromTo(
-            "[data-flood-content]",
-            { autoAlpha: 0, y: 16 },
-            { autoAlpha: 1, y: 0, ease: "none", duration: 0.3 },
-          );
+  useLazyGsap(ref, (gsap) => {
+    gsap.matchMedia().add(MOTION_QUERIES.motion, () => {
+      const timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top bottom",
+          end: "top 30%",
+          scrub: true,
+        },
       });
-    },
-    { scope: ref },
-  );
+      timeline
+        .fromTo(
+          "[data-flood-layer]",
+          { scaleY: 0 },
+          { scaleY: 1, ease: "none", duration: 0.7 },
+        )
+        .fromTo(
+          "[data-flood-content]",
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, ease: "none", duration: 0.3 },
+        );
+    });
+  });
 
   return (
     <section
