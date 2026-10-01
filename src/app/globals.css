@@ -1,0 +1,28 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Placeholder tokens for M0. The full design system lands in M1. */
+:root {
+  --crimson-600: #9e1b32;
+  --cream: #fbf8f4;
+  --ink: #1f2a24;
+  --display-family: var(--font-alexandria);
+}
+
+/* English headings use Unbounded; Arabic keeps Alexandria. */
+:lang(en) {
+  --display-family: var(--font-unbounded);
+}
+
+@theme inline {
+  --color-crimson-600: var(--crimson-600);
+  --color-cream: var(--cream);
+  --color-ink: var(--ink);
+  --font-sans: var(--font-plex-arabic), system-ui, sans-serif;
+  --font-display: var(--display-family), var(--font-plex-arabic), sans-serif;
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+}

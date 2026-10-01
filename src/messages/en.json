@@ -1,0 +1,11 @@
+{
+  "Metadata": {
+    "title": "Qurmuzi | Flower delivery in Saudi Arabia",
+    "description": "A demo flower shop. For testing only, no real orders or payments."
+  },
+  "Home": {
+    "brand": "Qurmuzi",
+    "tagline": "Flowers for the people you love, coming soon.",
+    "demoNotice": "Demo site, no real orders or payments."
+  }
+}
