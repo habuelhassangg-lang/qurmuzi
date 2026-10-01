@@ -37,6 +37,7 @@ test.describe("styleguide", () => {
       "badges",
       "skeleton",
       "shop",
+      "checkout",
       "utils",
       "motion",
     ]) {

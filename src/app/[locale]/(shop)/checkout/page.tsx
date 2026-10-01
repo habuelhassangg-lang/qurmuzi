@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { CheckoutForm } from "@/components/shop/checkout/checkout-form";
+import { CheckoutGate } from "@/components/shop/checkout/checkout-gate";
 import { routing } from "@/i18n/routing";
 import { getNow } from "@/lib/clock";
 import {
@@ -40,7 +40,7 @@ export default async function CheckoutPage({
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8">
       <h1 className="mb-6 font-display text-3xl font-bold">{t("title")}</h1>
-      <CheckoutForm
+      <CheckoutGate
         zones={zones}
         availability={availability}
         giftMessageMaxLength={settings.giftMessageMaxLength}

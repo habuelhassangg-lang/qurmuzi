@@ -32,29 +32,31 @@ export function OrderSummary({
         <Skeleton className="h-24 w-full" />
       )}
       {totals && (
-        <dl className="flex flex-col gap-2 border-t pt-3 text-sm">
-          <div className="flex justify-between">
-            <dt>{t("subtotal")}</dt>
-            <dd>{formatPrice(totals.subtotalHalalas, locale)}</dd>
-          </div>
-          <div className="flex justify-between">
-            <dt>{t("deliveryFee")}</dt>
-            <dd>
-              {deliveryKnown
-                ? formatPrice(totals.deliveryFeeHalalas, locale)
-                : t("deliveryFeePending")}
-            </dd>
-          </div>
-          <div className="flex justify-between border-t pt-2 text-base font-bold">
-            <dt>{t("total")}</dt>
-            <dd data-testid="checkout-total">
-              {formatPrice(totals.totalHalalas, locale)}
-            </dd>
-          </div>
+        <>
+          <dl className="flex flex-col gap-2 border-t pt-3 text-sm">
+            <div className="flex justify-between">
+              <dt>{t("subtotal")}</dt>
+              <dd>{formatPrice(totals.subtotalHalalas, locale)}</dd>
+            </div>
+            <div className="flex justify-between">
+              <dt>{t("deliveryFee")}</dt>
+              <dd>
+                {deliveryKnown
+                  ? formatPrice(totals.deliveryFeeHalalas, locale)
+                  : t("deliveryFeePending")}
+              </dd>
+            </div>
+            <div className="flex justify-between border-t pt-2 text-base font-bold">
+              <dt>{t("total")}</dt>
+              <dd data-testid="checkout-total">
+                {formatPrice(totals.totalHalalas, locale)}
+              </dd>
+            </div>
+          </dl>
           <p className="text-xs text-muted-foreground">
             {t("vatIncluded", { vat: formatPrice(totals.vatHalalas, locale) })}
           </p>
-        </dl>
+        </>
       )}
     </div>
   );

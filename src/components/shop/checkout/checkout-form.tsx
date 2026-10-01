@@ -49,6 +49,7 @@ import {
   type CheckoutFormInput,
   type CheckoutFormOutput,
 } from "./form-schema";
+import { CheckoutSkeleton } from "./checkout-skeleton";
 import { OrderSummary } from "./order-summary";
 import { PaymentSection, type CardState } from "./payment-section";
 
@@ -75,7 +76,7 @@ export function CheckoutForm({
   const tCart = useTranslations("Cart");
   const locale = useLocale();
   const router = useRouter();
-  const { lines, hydrated } = useCartQuote();
+  const { lines, hydrated, error: quoteError, retry } = useCartQuote();
   const clearCart = useCart((s) => s.clear);
   const openCart = useCart((s) => s.setOpen);
 
@@ -256,9 +257,29 @@ export function CheckoutForm({
     if (pendingValues.current) await placeOrder(pendingValues.current);
   };
 
-  if (hydrated && lines && lines.length === 0) {
+  // Until the saved cart is read and priced, show a skeleton of the same size,
+  // so swapping to the form (or the empty state) doesn't shift the layout.
+  if (quoteError && lines === null) {
     return (
-      <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed px-4 py-16 text-center">
+      <div
+        role="alert"
+        className="flex min-h-[70vh] flex-col items-center justify-center gap-3 rounded-xl border border-dashed px-4 py-16 text-center"
+      >
+        <p className="text-destructive">{tCart("quoteError")}</p>
+        <Button variant="outline" onClick={retry}>
+          {tCart("retry")}
+        </Button>
+      </div>
+    );
+  }
+
+  if (!hydrated || lines === null) {
+    return <CheckoutSkeleton />;
+  }
+
+  if (lines.length === 0) {
+    return (
+      <div className="flex min-h-[70vh] flex-col items-center justify-center gap-3 rounded-xl border border-dashed px-4 py-16 text-center">
         <p className="font-display text-xl font-semibold">
           {tCart("emptyTitle")}
         </p>
@@ -273,7 +294,7 @@ export function CheckoutForm({
   const totalLabel = totals ? formatPrice(totals.totalHalalas, locale) : "";
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_22rem]">
+    <div className="grid min-h-[70vh] gap-6 lg:grid-cols-[1fr_22rem]">
       {/* min-w-0 keeps the horizontally scrolling date strip from widening the grid. */}
       <div className="order-2 flex min-w-0 flex-col gap-6 lg:order-1">
         <nav aria-label={t("steps")}>

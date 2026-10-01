@@ -8,7 +8,13 @@ export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const slugs = await listProductSlugs();
-  const paths = ["", "/catalog", ...slugs.map((slug) => `/products/${slug}`)];
+  const paths = [
+    "",
+    "/catalog",
+    "/delivery-policy",
+    "/privacy",
+    ...slugs.map((slug) => `/products/${slug}`),
+  ];
 
   return paths.flatMap((path) =>
     routing.locales.map((locale) => ({
