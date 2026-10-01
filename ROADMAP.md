@@ -78,21 +78,21 @@
 
 ## M2 — البيانات والكتالوج وصفحة المنتج
 
-- [ ] Database schema: categories, occasions, products (اسم ووصف بالعربي والإنجليزي، slug، لون، نوع الورد)، product_images, variants (عادي / كبير / فاخر)، add_ons, cities, districts (برسوم توصيل)، delivery_slots, daily_capacity, blackout_dates, settings, orders, order_items, order_status_history
-- [ ] 🪝 خطاطيف في الـ schema:
+- [x] Database schema: categories, occasions, products (اسم ووصف بالعربي والإنجليزي، slug، لون، نوع الورد)، product_images, variants (عادي / كبير / فاخر)، add_ons, cities, districts (برسوم توصيل)، delivery_slots, daily_capacity, blackout_dates, settings, orders, order_items, order_status_history
+- [x] 🪝 خطاطيف في الـ schema:
   - `orders.user_id` يقبل null (عشان الحسابات بعدين)
   - `coupon_code` و`discount_halalas` (عشان الكوبونات بعدين)
   - `utm_first` و`utm_last` (jsonb، يقبلوا null)
   - الـ enum فيه كل حالات الطلب من دلوقتي
   - occasions فيها تواريخ (عشان صفحات المواسم)
   - الإعدادات (زي ساعة الـ cut-off) في جدول، مش constants في الكود (عشان الأدمن بعدين)
-- [ ] 🆕 سكربت صور: صور Pexels ← قص 4:5 ← WebP/AVIF في `/public`، مع حفظ اسم المصوّر
-- [ ] Seed: **15 منتج** واقعي (نكمّلهم 30 🟡 بعدين) بأسماء وأوصاف باللغة البيضا وأسعار بالريال، و3 مدن بأحياء حقيقية، وفترات توصيل، وسعة يومية لـ 30 يوم قدام
-- [ ] صفحة الكتالوج: فلترة بالمناسبة والميزانية، وترتيب (السعر، الأحدث)، والفلاتر في الـ URL، مع حالات skeleton وempty
-- [ ] صفحة المنتج: معرض صور، أحجام، إضافات، سعر بيتحدث مباشرة، زرار أضف للسلة ثابت على الموبايل، وعد التوصيل، وملاحظة سياسة البدائل
-- [ ] 🪝 صورة المنتج عليها `view-transition-name` ثابت (عشان الـ shared-element transition بعدين)
-- [ ] SEO أساسي: `generateMetadata`، canonical، hreflang، JSON-LD (Product وOffer وBreadcrumbList)، `sitemap.ts`، `robots.ts`
-- [ ] 🪝 `track()` كـ stub (من غير أي vendor) بأسماء events عليها types، ويتنادى عند `view_item`
+- [x] 🆕 سكربت صور: صور Pexels ← قص 4:5 ← WebP/AVIF في `/public`، مع حفظ اسم المصوّر
+- [x] Seed: **15 منتج** واقعي (نكمّلهم 30 🟡 بعدين) بأسماء وأوصاف باللغة البيضا وأسعار بالريال، و3 مدن بأحياء حقيقية، وفترات توصيل، وسعة يومية لـ 30 يوم قدام
+- [x] صفحة الكتالوج: فلترة بالمناسبة والميزانية، وترتيب (السعر، الأحدث)، والفلاتر في الـ URL، مع حالات skeleton وempty
+- [x] صفحة المنتج: معرض صور، أحجام، إضافات، سعر بيتحدث مباشرة، زرار أضف للسلة ثابت على الموبايل، وعد التوصيل، وملاحظة سياسة البدائل
+- [x] 🪝 صورة المنتج عليها `view-transition-name` ثابت (عشان الـ shared-element transition بعدين)
+- [x] SEO أساسي: `generateMetadata`، canonical، hreflang، JSON-LD (Product وOffer وBreadcrumbList)، `sitemap.ts`، `robots.ts`
+- [x] 🪝 `track()` كـ stub (من غير أي vendor) بأسماء events عليها types، ويتنادى عند `view_item`
 
 **Done when:** تقدري تتفرجي على كل المنتجات وتفلتريها وتفتحي أي منتج، بالعربي والإنجليزي، والـ JSON-LD بيعدّي من Rich Results Test.
 
@@ -269,6 +269,7 @@ CLAUDE.md. الأسعار تتخزن بالهللة. ضيف كل الخطاطي�
 - طلبات الشركات
 - بطاقات هدايا (Gift cards)
 - Dark mode (الـ tokens كـ CSS variables هتسهّله)
+- صور حقيقية للمنتجات من Pexels بدل الصور المؤقتة (السكربت جاهز: حط الصور في `scripts/images/source/` وشغّل `pnpm images --force`)
 - رمز الريال السعودي الرسمي الجديد بدل "ر.س" (التغيير هيبقى في دالة التنسيق بس)
 
 ---

@@ -37,6 +37,9 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium
+      # Local PGlite database for the E2E build.
+      - run: pnpm db:migrate
+      - run: pnpm db:seed
       - run: pnpm test:e2e
       - uses: actions/upload-artifact@v4
         if: always()

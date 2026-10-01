@@ -79,9 +79,10 @@ pnpm typecheck      # next typegen && tsc --noEmit
 pnpm test           # vitest
 pnpm test:e2e       # playwright (desktop + 360px mobile, ar + en)
 pnpm db:generate    # drizzle-kit generate
-pnpm db:migrate     # apply migrations
-pnpm db:seed        # seed dummy data
-pnpm images         # crop Pexels sources to 4:5 and export WebP/AVIF   (added in M2)
+pnpm db:migrate     # apply migrations (same driver as the app: Neon or PGlite)
+pnpm db:seed        # seed dummy data (idempotent; tops up 30 days of capacity)
+pnpm images         # crop sources to 4:5 (or make placeholders), export WebP/AVIF
+pnpm vercel-build   # Vercel: migrate + seed Neon on production deploys, then build
 pnpm email:dev      # react-email preview                               (Later, L3)
 ```
 
@@ -292,22 +293,27 @@ Hard rules (always apply):
 
 ## 14. Decisions Log
 
-| Decision                                                                  | Why                                                                                                               |
-| ------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| MVP = full guest purchase journey, deployed                               | A working end-to-end flow first; wow and growth features come after.                                              |
-| Deploy to Vercel + Neon in M0, not at the end                             | PGlite cannot run on Vercel; surface driver/env issues early.                                                     |
-| Driver must support transactions                                          | Capacity reservation must be atomic.                                                                              |
-| Alexandria for both Arabic display and logo; Unbounded for English        | Keeps the "max two families per language" rule.                                                                   |
-| Latin digits everywhere, explicit calendars in `Intl`                     | `ar-SA` defaults to Hijri + Arabic-Indic digits; avoid silent bugs.                                               |
-| 15 seed products in MVP, 30 later                                         | Image sourcing is the bottleneck; 15 is enough to test filters.                                                   |
-| Persistent demo notice; card data never leaves the browser                | A realistic payment UI on a public URL must not look or act like a real store.                                    |
-| PGlite locally (not Docker), Neon in production                           | Zero local install; one `db` client switches on `DATABASE_URL`, so Docker can be added later with no code change. |
-| `cn()` lives in `lib/utils/cn.ts`                                         | `lib/utils/` is the folder for all helpers (section 4).                                                           |
-| Supporting neutrals `--surface`, `--line`, `--surface-muted`, `--danger`  | The brand table has no white, border or error color; these are UI chrome only.                                    |
-| Tailwind `muted` = quiet surface, `muted-foreground` = brand `--muted`    | shadcn uses `bg-muted` for surfaces and `text-muted-foreground` for secondary text.                               |
-| `--sage` is decorative only (2.48:1 on cream)                             | Fails WCAG AA for text; `/styleguide` shows every pair's ratio.                                                   |
-| Toast = Sonner                                                            | shadcn replaced its Toast component with Sonner.                                                                  |
-| Sheet sides are logical (`start`/`end`)                                   | The cart drawer opens from the reading-end edge in both directions.                                               |
-| All button sizes ≥ 44px; no `sm`/`xs` sizes                               | Tap-target rule in section 9.                                                                                     |
-| `/styleguide` is on in a production build only with `ENABLE_STYLEGUIDE=1` | E2E screenshots it in CI; Vercel leaves it unset, so it returns 404.                                              |
-| GSAP is allowed                                                           | It is free for all use (including plugins), so it meets the "free" constraint.                                    |
+| Decision                                                                    | Why                                                                                                                                             |
+| --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| MVP = full guest purchase journey, deployed                                 | A working end-to-end flow first; wow and growth features come after.                                                                            |
+| Deploy to Vercel + Neon in M0, not at the end                               | PGlite cannot run on Vercel; surface driver/env issues early.                                                                                   |
+| Driver must support transactions                                            | Capacity reservation must be atomic.                                                                                                            |
+| Alexandria for both Arabic display and logo; Unbounded for English          | Keeps the "max two families per language" rule.                                                                                                 |
+| Latin digits everywhere, explicit calendars in `Intl`                       | `ar-SA` defaults to Hijri + Arabic-Indic digits; avoid silent bugs.                                                                             |
+| 15 seed products in MVP, 30 later                                           | Image sourcing is the bottleneck; 15 is enough to test filters.                                                                                 |
+| Persistent demo notice; card data never leaves the browser                  | A realistic payment UI on a public URL must not look or act like a real store.                                                                  |
+| PGlite locally (not Docker), Neon in production                             | Zero local install; one `db` client switches on `DATABASE_URL`, so Docker can be added later with no code change.                               |
+| `cn()` lives in `lib/utils/cn.ts`                                           | `lib/utils/` is the folder for all helpers (section 4).                                                                                         |
+| Supporting neutrals `--surface`, `--line`, `--surface-muted`, `--danger`    | The brand table has no white, border or error color; these are UI chrome only.                                                                  |
+| Tailwind `muted` = quiet surface, `muted-foreground` = brand `--muted`      | shadcn uses `bg-muted` for surfaces and `text-muted-foreground` for secondary text.                                                             |
+| `--sage` is decorative only (2.48:1 on cream)                               | Fails WCAG AA for text; `/styleguide` shows every pair's ratio.                                                                                 |
+| Toast = Sonner                                                              | shadcn replaced its Toast component with Sonner.                                                                                                |
+| Sheet sides are logical (`start`/`end`)                                     | The cart drawer opens from the reading-end edge in both directions.                                                                             |
+| All button sizes ≥ 44px; no `sm`/`xs` sizes                                 | Tap-target rule in section 9.                                                                                                                   |
+| `/styleguide` is on in a production build only with `ENABLE_STYLEGUIDE=1`   | E2E screenshots it in CI; Vercel leaves it unset, so it returns 404.                                                                            |
+| GSAP is allowed                                                             | It is free for all use (including plugins), so it meets the "free" constraint.                                                                  |
+| The build never queries the database                                        | `next build` renders in several processes and PGlite allows one. Product pages use on-demand ISR (`revalidate = 3600`), the sitemap is dynamic. |
+| Production deploys run migrate + seed (`vercel.json` → `pnpm vercel-build`) | No local setup needed to prepare Neon; previews skip it so unmerged migrations never touch production.                                          |
+| Placeholder product images until real photos are added                      | Pexels is blocked in the dev sandbox; `pnpm images` uses real photos from `scripts/images/source/` when present.                                |
+| Budget filters use the cheapest size                                        | "From" price is what shoppers compare; buckets are under 200 / 200–400 / 400–700 / 700+ SAR.                                                    |
+| Product pages have no `loading.tsx`                                         | Streaming a skeleton sends 200 before `notFound()`; unknown products must return a real 404.                                                    |

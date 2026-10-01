@@ -8,6 +8,7 @@ import { Header } from "@/components/layout/header";
 import { Providers } from "@/components/layout/providers";
 import { localeDirection, routing } from "@/i18n/routing";
 import { fontVariables } from "@/lib/fonts";
+import { alternatesFor, SITE_URL } from "@/lib/site";
 import "../globals.css";
 
 export function generateStaticParams() {
@@ -20,7 +21,12 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
   const t = await getTranslations({ locale, namespace: "Metadata" });
-  return { title: t("title"), description: t("description") };
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: { default: t("title"), template: `%s | ${t("siteName")}` },
+    description: t("description"),
+    alternates: alternatesFor(locale),
+  };
 }
 
 export default async function LocaleLayout({

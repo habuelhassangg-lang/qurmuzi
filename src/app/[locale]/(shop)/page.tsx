@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { hasLocale, useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { use } from "react";
+import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 
 export default function HomePage({ params }: PageProps<"/[locale]">) {
@@ -17,6 +18,12 @@ export default function HomePage({ params }: PageProps<"/[locale]">) {
         {common("brand")}
       </h1>
       <p className="text-lg">{t("tagline")}</p>
+      <Link
+        href="/catalog"
+        className="inline-flex min-h-11 items-center rounded-full bg-primary px-6 text-sm font-medium text-primary-foreground hover:bg-crimson-500"
+      >
+        {t("browse")}
+      </Link>
     </section>
   );
 }
