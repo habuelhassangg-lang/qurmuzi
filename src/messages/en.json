@@ -11,7 +11,8 @@
   "Common": {
     "brand": "Qurmuzi",
     "close": "Close",
-    "logo": "قُرمُزي"
+    "logo": "قُرمُزي",
+    "skipToContent": "Skip to content"
   },
   "DemoNotice": {
     "text": "Demo site, no real orders or payments."
@@ -29,7 +30,10 @@
   "Footer": {
     "tagline": "Flowers delivered to the people you love in Riyadh, Jeddah and Dammam.",
     "demo": "A demo site for learning and testing. No real orders or payments.",
-    "rights": "© {year} Qurmuzi"
+    "rights": "© {year} Qurmuzi",
+    "links": "Useful links",
+    "privacy": "Privacy policy",
+    "deliveryPolicy": "Delivery & substitutions"
   },
   "Home": {
     "heroEyebrow": "Welcome to Qurmuzi",
@@ -108,7 +112,10 @@
     "textRevealSample": "What's the occasion?",
     "floodTitle": "Welcome to Qurmuzi",
     "floodBody": "This section floods from cream to crimson as you scroll.",
-    "shop": "Shop components"
+    "shop": "Shop components",
+    "checkout": "Cart & checkout",
+    "policySample": "Policy page section",
+    "showPetals": "Show success petals"
   },
   "Delivery": {
     "promise": "Order before {hour} for same-day delivery",
@@ -304,5 +311,56 @@
     "demoNote": "This is a demo order: no flowers will be delivered and nothing was charged.",
     "continue": "Continue shopping",
     "gift": "Gift card"
+  },
+  "NotFound": {
+    "metaTitle": "Page not found",
+    "title": "We couldn't find that page",
+    "body": "The link may have changed or been mistyped. Try one of these instead:",
+    "home": "Home",
+    "catalog": "Browse all flowers",
+    "occasions": "Shop by occasion",
+    "picks": "Our picks for you"
+  },
+  "Error": {
+    "title": "Something went wrong",
+    "body": "We couldn't show this page right now. Please try again, or go back home if it keeps happening.",
+    "retry": "Try again",
+    "home": "Home"
+  },
+  "Privacy": {
+    "metaTitle": "Privacy policy",
+    "title": "Privacy policy",
+    "updated": "Last updated: {date}",
+    "demoTitle": "A demo site",
+    "demoBody": "Qurmuzi is a demo store for learning and testing. There are no real orders or payments, so please don't enter real details about yourself or anyone else.",
+    "collectTitle": "What we collect",
+    "collectBody": "When you order: the buyer's name, mobile and email; the recipient's name, mobile and address; delivery details and the gift card message.",
+    "notCollectTitle": "What we never collect",
+    "notCollectBody": "We never send or store card details, and we never ask for OTPs or bank passwords. Card checks happen on your device only.",
+    "useTitle": "Why we use it",
+    "useBody": "Only to create the demo order and show its invoice. We don't sell or share data with anyone.",
+    "cookiesTitle": "Storage on your device and tracking",
+    "cookiesBody": "We keep your cart in your browser (localStorage) so it isn't lost. No tracking or advertising tools are active in this version.",
+    "retentionTitle": "Retention",
+    "retentionBody": "Demo order data may be deleted at any time without notice.",
+    "rightsTitle": "Your rights",
+    "rightsBody": "Under Saudi Arabia's Personal Data Protection Law you can know, access, correct and request deletion of your data. Since this is a demo, the simplest choice is not to enter real data.",
+    "contactTitle": "Contact",
+    "contactBody": "This is a demo project without an official support channel."
+  },
+  "DeliveryPolicy": {
+    "metaTitle": "Delivery & substitution policy",
+    "title": "Delivery & substitutions",
+    "sameDayTitle": "Same-day delivery",
+    "sameDayBody": "Order before {hour} for delivery today, subject to available times. After that, the earliest delivery is tomorrow.",
+    "slotsTitle": "Delivery times",
+    "slotsBody": "We deliver in time windows through the day. On Fridays, deliveries start in the afternoon. Some days may be closed during peak seasons.",
+    "zonesTitle": "Cities, districts and delivery fees",
+    "district": "District",
+    "fee": "Delivery fee",
+    "substitutionTitle": "Substitution policy",
+    "substitutionBody": "Flowers are natural and seasonal. If a flower is unavailable, we replace it with a similar one in color and value, keeping the spirit of the arrangement.",
+    "surpriseTitle": "Surprise deliveries",
+    "surpriseBody": "If you choose \"surprise\", we won't call the recipient before arriving unless delivery is not possible otherwise."
   }
 }

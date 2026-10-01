@@ -1,12 +1,12 @@
 import { z } from "zod";
+import { MAX_CART_LINES, MAX_LINE_QUANTITY } from "@/lib/cart/limits";
 import { PAYMENT_METHODS } from "@/lib/payments";
 import { normalizeNationalAddressCode } from "@/lib/utils/address";
 import { normalizeSaudiMobile } from "@/lib/utils/phone";
 
 /** Upper bound for the gift message; the active limit comes from the `gift_message_max_length` setting. */
 export const GIFT_MESSAGE_HARD_LIMIT = 500;
-export const MAX_LINE_QUANTITY = 10;
-export const MAX_CART_LINES = 20;
+export { MAX_CART_LINES, MAX_LINE_QUANTITY } from "@/lib/cart/limits";
 
 const id = z.number().int().positive();
 

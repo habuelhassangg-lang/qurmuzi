@@ -9,7 +9,7 @@ import type { QuotedCartLine } from "@/lib/cart/use-cart-quote";
 import { calculateItemPrice } from "@/lib/pricing";
 import { formatPrice } from "@/lib/utils/currency";
 import { formatNumber } from "@/lib/utils/numbers";
-import { MAX_LINE_QUANTITY } from "@/lib/validation/checkout";
+import { MAX_LINE_QUANTITY } from "@/lib/cart/limits";
 import { ProductImage } from "./product-image";
 
 export function CartLineItem({
@@ -34,15 +34,11 @@ export function CartLineItem({
 
   return (
     <li className="flex gap-3 py-4" data-testid="cart-line">
+      {/* Decorative thumbnail: the product name next to it is the link. */}
       {line.image && (
-        <Link
-          href={`/products/${line.slug}`}
-          onClick={() => setOpen(false)}
-          className="w-20 shrink-0"
-          tabIndex={-1}
-        >
+        <div className="w-20 shrink-0" aria-hidden>
           <ProductImage path={line.image} alt="" sizes="80px" />
-        </Link>
+        </div>
       )}
       <div className="flex min-w-0 flex-1 flex-col gap-1">
         <div className="flex items-start justify-between gap-2">

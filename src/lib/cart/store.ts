@@ -2,11 +2,9 @@
 
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import {
-  MAX_CART_LINES,
-  MAX_LINE_QUANTITY,
-  type CartLineInput,
-} from "@/lib/validation/checkout";
+// Type-only import: the Zod schemas stay out of the client bundle.
+import type { CartLineInput } from "@/lib/validation/checkout";
+import { MAX_CART_LINES, MAX_LINE_QUANTITY } from "./limits";
 
 /** A cart line: IDs and choices only. Prices always come from the server. */
 export type CartLine = CartLineInput & { key: string };

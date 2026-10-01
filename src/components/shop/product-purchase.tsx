@@ -60,7 +60,7 @@ export function ProductPurchase({
             <label
               key={v.id}
               htmlFor={`${id}-size-${v.id}`}
-              className="flex min-h-16 cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border bg-surface p-2 text-center has-[[data-state=checked]]:border-crimson-600 has-[[data-state=checked]]:bg-crimson-50"
+              className="group flex min-h-16 cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border bg-surface p-2 text-center has-[[data-state=checked]]:border-crimson-600 has-[[data-state=checked]]:bg-crimson-50"
             >
               <RadioGroupItem
                 id={`${id}-size-${v.id}`}
@@ -68,7 +68,7 @@ export function ProductPurchase({
                 className="sr-only"
               />
               <span className="font-medium">{tSizes(v.size)}</span>
-              <span className="text-sm text-muted-foreground">
+              <span className="text-sm text-muted-foreground group-has-[[data-state=checked]]:text-crimson-700">
                 {formatPrice(v.priceHalalas, locale)}
               </span>
             </label>

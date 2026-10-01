@@ -95,3 +95,31 @@ test("footer shows the demo disclaimer", async ({ page }, testInfo) => {
   await page.goto(`/${projectLocale(testInfo)}`);
   await expect(page.getByRole("contentinfo")).toBeVisible();
 });
+
+test("keyboard: the skip link is first and jumps to the main content", async ({
+  page,
+}, testInfo) => {
+  const locale = projectLocale(testInfo);
+  await page.goto(`/${locale}`);
+  await page.keyboard.press("Tab");
+  const skip = page.getByRole("link", {
+    name: locale === "ar" ? "تخطَّ إلى المحتوى" : "Skip to content",
+  });
+  await expect(skip).toBeFocused();
+  await expect(skip).toBeVisible();
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/#main$/);
+  await expect(page.locator("#main")).toBeFocused();
+});
+
+test("keyboard: add to cart with Enter", async ({ page }, testInfo) => {
+  const locale = projectLocale(testInfo);
+  await page.goto(`/${locale}/products/pink-dawn`);
+  await page
+    .getByRole("button", {
+      name: locale === "ar" ? "أضف للسلة" : "Add to cart",
+    })
+    .focus();
+  await page.keyboard.press("Enter");
+  await expect(page.getByTestId("cart-count")).toHaveText("1");
+});

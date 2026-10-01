@@ -6,6 +6,7 @@ import { DemoNotice } from "@/components/layout/demo-notice";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { Providers } from "@/components/layout/providers";
+import { SkipLink } from "@/components/layout/skip-link";
 import { localeDirection, routing } from "@/i18n/routing";
 import { fontVariables } from "@/lib/fonts";
 import { alternatesFor, SITE_URL } from "@/lib/site";
@@ -49,9 +50,16 @@ export default async function LocaleLayout({
       <body className="flex min-h-full flex-col">
         <NextIntlClientProvider>
           <Providers dir={dir}>
+            <SkipLink />
             <DemoNotice />
             <Header />
-            <main className="flex flex-1 flex-col">{children}</main>
+            <main
+              id="main"
+              tabIndex={-1}
+              className="flex flex-1 flex-col outline-none"
+            >
+              {children}
+            </main>
             <Footer />
           </Providers>
         </NextIntlClientProvider>

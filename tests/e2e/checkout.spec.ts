@@ -1,9 +1,19 @@
+import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 import { e2eFixtureDates } from "../../scripts/data/e2e-fixtures";
 import { riyadhDateString } from "../../src/lib/utils/dates";
 import { projectLocale, type Locale } from "./helpers";
 
 const TEST_CLOCK_COOKIE = "qz-test-now";
+
+async function axeViolations(page: Page) {
+  const results = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
+    .analyze();
+  return results.violations.map(
+    (v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).join(", ")}`,
+  );
+}
 
 const copy = {
   ar: {
@@ -108,6 +118,7 @@ test.describe("purchase journey", () => {
     await page.getByRole("button", { name: c.next }).click();
     await fillBuyer(page, locale);
     await expect(page.getByTestId("card-form")).toBeVisible();
+    expect(await axeViolations(page)).toEqual([]);
     await expect(page.getByTestId("checkout-total").first()).toHaveText(
       c.total,
     );
@@ -123,6 +134,7 @@ test.describe("purchase journey", () => {
     await expect(page.getByTestId("invoice-total")).toHaveText(c.total);
     await expect(page.getByTestId("invoice-vat")).toHaveText(c.vat);
     await expect(page.getByTestId("zatca-qr").locator("svg")).toBeVisible();
+    expect(await axeViolations(page)).toEqual([]);
     await expect(page.locator("main")).not.toContainText(/[٠-٩]/);
 
     // Card data never leaves the browser.

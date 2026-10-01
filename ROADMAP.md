@@ -159,12 +159,12 @@ CLAUDE.md. الأسعار تتخزن بالهللة. ضيف كل الخطاطي�
 
 ## M5 — التشطيب والإطلاق 🚀
 
-- [ ] كل صفحات الـ MVP فيها: loading (skeleton)، وempty، و`error.tsx`، وصفحة 404 لطيفة فيها اقتراحات
-- [ ] مراجعة Accessibility وRTL: كيبورد، focus ظاهر، contrast، أيقونات معكوسة، + `@axe-core/playwright`
-- [ ] Lighthouse موبايل على الرئيسية والكتالوج والمنتج والـ checkout ≥ الميزانية
-- [ ] صفحات مختصرة: الخصوصية (متوافقة مع PDPL، وبتوضح إن الموقع تجريبي)، وسياسة التوصيل والبدائل
-- [ ] Neon production: migrate + seed، ومتغيرات البيئة في Vercel
-- [ ] README بطريقة التشغيل + تحديث أوامر CLAUDE.md
+- [x] كل صفحات الـ MVP فيها: loading (skeleton)، وempty، و`error.tsx`، وصفحة 404 لطيفة فيها اقتراحات
+- [x] مراجعة Accessibility وRTL: كيبورد، focus ظاهر، contrast، أيقونات معكوسة، + `@axe-core/playwright`
+- [x] Lighthouse موبايل على الرئيسية والكتالوج والمنتج والـ checkout ≥ الميزانية
+- [x] صفحات مختصرة: الخصوصية (متوافقة مع PDPL، وبتوضح إن الموقع تجريبي)، وسياسة التوصيل والبدائل
+- [x] Neon production: migrate + seed، ومتغيرات البيئة في Vercel
+- [x] README بطريقة التشغيل + تحديث أوامر CLAUDE.md
 - [ ] Tag `v0.1.0` 🎉
 
 **Done when:** حد من برا يفتح اللينك على موبايله ويطلب بوكيه بالعربي والإنجليزي من غير ما تشرحي له حاجة.

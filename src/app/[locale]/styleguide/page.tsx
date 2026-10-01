@@ -7,6 +7,7 @@ import { routing } from "@/i18n/routing";
 import { isStyleguideEnabled } from "@/lib/styleguide";
 import { BadgesCardsSection } from "./_sections/badges-cards";
 import { ButtonsSection } from "./_sections/buttons";
+import { CheckoutSection } from "./_sections/checkout";
 import { ColorsSection } from "./_sections/colors";
 import { FormsSection } from "./_sections/forms";
 import { MotionSection } from "./_sections/motion";
@@ -38,6 +39,7 @@ export default function StyleguidePage({
       <OverlaysSection />
       <BadgesCardsSection />
       <ShopSection />
+      <CheckoutSection />
       <UtilsSection />
       <MotionSection />
     </div>
